@@ -1,4 +1,3 @@
-#Import the necessary methods from tweepy library
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
@@ -8,14 +7,12 @@ config = configparser.ConfigParser()
 config.read('example.ini')
 config["twitter"]["access_token"]
 
-#Variables that contains the user credentials to access Twitter API 
 access_token = config["twitter"]["access_token"]
 access_token_secret = config["twitter"]["access_token_secret"]
 consumer_key = config["twitter"]["consumer_key"]
 consumer_secret = config["twitter"]["consumer_secret"]
 
 
-# #This is a basic listener that just prints received tweets to stdout.
 class StdOutListener(StreamListener):
 
     def on_data(self, data):
@@ -28,12 +25,10 @@ class StdOutListener(StreamListener):
 
 if __name__ == '__main__':
 
-    #This handles Twitter authetification and the connection to Twitter Streaming API
     l = StdOutListener()
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     stream = Stream(auth, l)
 
-    #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
-    newyork=[-74.259090,40.477399,-73.700272,40.91757]
-    stream.filter(locations=newyork)
+    usa=[-125.0011,24.9493,-66.9326,49.5904]
+    stream.filter(locations=usa)
